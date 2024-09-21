@@ -1,1 +1,51 @@
+//C语言解法
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* twoSum(int* nums, int numsSize, int target, int* returnSize) {
+    // 分配结果数组
+    int* result = (int*)malloc(2 * sizeof(int));
 
+    // 遍历数组中的每个元素
+    for (int i = 0; i < numsSize - 1; i++) {
+        for (int j = i + 1; j < numsSize; j++) {
+            // 检查是否找到符合条件的两个数
+            if (nums[i] + nums[j] == target) {
+                result[0] = i;   // 第一个数的索引
+                result[1] = j;   // 第二个数的索引
+                *returnSize = 2; // 返回的数组大小为2
+                return result;   // 返回结果数组
+            }
+        }
+    }
+
+    // 如果没有找到，返回NULL
+    *returnSize = 0;
+    return NULL;
+}
+
+
+
+#python解法 使用哈希表
+class Solution(object):
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+
+        # 创建一个字典来存储数值和对应的索引
+        hash_map = {}
+
+        # 遍历数组中的每个元素
+        for i, num in enumerate(nums):
+            complement = target - num  # 计算需要的另一个数
+            if complement in hash_map:
+                # 如果在哈希表中找到另一个数的索引，返回结果
+                return [hash_map[complement], i]
+            # 将当前数的索引存入哈希表
+            hash_map[num] = i
+        
+        # 如果没有找到符合条件的结果，返回空列表
+        return []
